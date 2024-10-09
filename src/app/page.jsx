@@ -8,14 +8,19 @@ export default function Home() {
   const [inputValue, setInputValue] = useState("");
   function inputChange(e) {
     setInputValue(e.target.value);
-    console.log(e.target.value);
   }
 
-  //add button support
+  //button support
+  const [productList, setProductList] = useState([]);
+  function buttonClicked() {
+    const newProductList = [...productList, inputValue];
+    setProductList(newProductList);
+    console.log(newProductList);
+  }
 
   return (
     <div id="container">
-      <form autoComplete="off" id="add">
+      <div autoComplete="off" id="add">
         <input
           type="text"
           value={inputValue}
@@ -24,8 +29,10 @@ export default function Home() {
           onChange={inputChange}
         />
         <label htmlFor="addInput">Product</label>
-        <button id="addButton">Add</button>
-      </form>
+        <button id="addButton" onClick={buttonClicked}>
+          Add
+        </button>
+      </div>
       <div id="spacer" aria-hidden="true"></div>
       <div id="list"></div>
     </div>
