@@ -6,12 +6,12 @@ import Product from "./components/Product";
 export default function Home() {
   //input support
   const [inputValue, setInputValue] = useState("");
-  function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function inputChange(e) {
     setInputValue(e.target.value);
   }
 
   //button support
-  const [productList, setProductList] = useState<string[]>([]);
+  const [productList, setProductList] = useState([]);
   function buttonClicked() {
     const newProductList = [...productList, inputValue];
     setProductList(newProductList);
@@ -20,10 +20,9 @@ export default function Home() {
 
   return (
     <div id="container">
-      <div id="add">
+      <div autoComplete="off" id="add">
         <input
           type="text"
-          autoComplete="off"
           value={inputValue}
           id="addInput"
           placeholder=""
@@ -34,7 +33,7 @@ export default function Home() {
           Add
         </button>
       </div>
-      <div id="spacer"></div>
+      <div id="spacer" aria-hidden="true"></div>
       <div id="list">
         {productList.map((element, index) => (
           <Product key={index} productName={element} />
