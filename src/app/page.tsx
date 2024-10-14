@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import Product from "./components/Product";
+import { useEffect, useState } from "react";
+import { ListElement } from "./components/list-element";
+import { Product } from "./product";
 
 export default function Home() {
   //input support
@@ -11,12 +12,27 @@ export default function Home() {
   }
 
   //button support
-  const [productList, setProductList] = useState<string[]>([]);
-  function buttonClicked() {
-    const newProductList = [...productList, inputValue];
-    setProductList(newProductList);
-    console.log(newProductList);
+  const [productList, setProductList] = useState<Product[]>([]);
+  async function addTask() {
+    const response = await fetch("/api/product", {
+      method: "POST",
+      body: JSON.stringify({
+        name: inputValue,
+      }),
+    });
+    setInputValue("");
+    await fetchProducts();
   }
+
+  async function fetchProducts() {
+    const response = await fetch("/api/product");
+    const body = await response.json();
+    setProductList(body);
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div id="container">
@@ -30,14 +46,14 @@ export default function Home() {
           onChange={inputChange}
         />
         <label htmlFor="addInput">Product</label>
-        <button id="addButton" onClick={buttonClicked}>
+        <button id="addButton" onClick={addTask}>
           Add
         </button>
       </div>
       <div id="spacer"></div>
       <div id="list">
-        {productList.map((element, index) => (
-          <Product key={index} productName={element} />
+        {productList.map((product) => (
+          <ListElement key={product.id} product={product} />
         ))}
       </div>
     </div>
