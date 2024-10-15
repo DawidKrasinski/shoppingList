@@ -35,23 +35,23 @@ export default function Home() {
   }, []);
 
   return (
-    <div id="container">
-      <div id="add">
+    <div className="container">
+      <div className="add">
         <input
           type="text"
           autoComplete="off"
           value={inputValue}
-          id="addInput"
+          className="addInput"
           placeholder=""
           onChange={inputChange}
         />
         <label htmlFor="addInput">Product</label>
-        <button id="addButton" onClick={addTask}>
+        <button className="addButton" id="addButton" onClick={addTask}>
           Add
         </button>
       </div>
-      <div id="spacer"></div>
-      <div id="list">
+      <div className="spacer"></div>
+      <div className="list">
         {productList.map((product) => (
           <ListElement key={product.id} product={product} />
         ))}
