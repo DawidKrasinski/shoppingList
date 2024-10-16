@@ -26,11 +26,5 @@ export async function POST(req: NextRequest) {
   const [results] = await connection.query(
     `INSERT INTO products (name) VALUES ("${body.name}");`
   );
-
-  return NextResponse.json(
-    {},
-    {
-      status: 201,
-    }
-  );
+  return NextResponse.json({}, { status: 201 });
 }
