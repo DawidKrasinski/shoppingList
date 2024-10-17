@@ -5,13 +5,11 @@ import { ListElement } from "./components/list-element";
 import { Product } from "./product";
 
 export default function Home() {
-  //input support
   const [inputValue, setInputValue] = useState("");
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
   }
 
-  //button support
   const [productList, setProductList] = useState<Product[]>([]);
   async function addTask() {
     const response = await fetch("/api/product", {
@@ -23,6 +21,16 @@ export default function Home() {
     setInputValue("");
     await fetchProducts();
   }
+
+  // export async function deleteListElement(listElement: Product) {
+  //   const response = await fetch("api/product", {
+  //     method: "DELETE",
+  //     body: JSON.stringify({
+  //       name: listElement.id,
+  //     }),
+  //   });
+  //   await fetchProducts();
+  // }
 
   async function fetchProducts() {
     const response = await fetch("/api/product");

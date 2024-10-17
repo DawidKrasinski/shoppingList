@@ -28,3 +28,12 @@ export async function POST(req: NextRequest) {
   );
   return NextResponse.json({}, { status: 201 });
 }
+
+export async function DELETE(req: NextRequest) {
+  const connection = await getDB();
+  const body = await req.json();
+  const [results] = await connection.query(
+    `DELETE FROM products WHERE id = ${body.name};`
+  );
+  return NextResponse.json(results);
+}
