@@ -22,16 +22,6 @@ export default function Home() {
     await fetchProducts();
   }
 
-  // export async function deleteListElement(listElement: Product) {
-  //   const response = await fetch("api/product", {
-  //     method: "DELETE",
-  //     body: JSON.stringify({
-  //       name: listElement.id,
-  //     }),
-  //   });
-  //   await fetchProducts();
-  // }
-
   async function fetchProducts() {
     const response = await fetch("/api/product");
     const body = await response.json();

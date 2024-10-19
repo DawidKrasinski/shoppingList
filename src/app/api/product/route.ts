@@ -29,11 +29,12 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({}, { status: 201 });
 }
 
+//DELETE method
 export async function DELETE(req: NextRequest) {
   const connection = await getDB();
   const body = await req.json();
   const [results] = await connection.query(
-    `DELETE FROM products WHERE id = ${body.name};`
+    `DELETE FROM products WHERE id = ${body.id};`
   );
   return NextResponse.json(results);
 }
