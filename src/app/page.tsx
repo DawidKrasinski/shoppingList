@@ -50,8 +50,12 @@ export default function Home() {
       </div>
       <div className="spacer"></div>
       <div className="list">
-        {productList.map((product) => (
-          <ListElement key={product.id} product={product} />
+        {productList.reverse().map((product) => (
+          <ListElement
+            key={product.id}
+            fetchProducts={fetchProducts}
+            product={product}
+          />
         ))}
       </div>
     </div>

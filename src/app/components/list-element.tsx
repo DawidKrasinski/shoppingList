@@ -1,14 +1,12 @@
 import { Product } from "../product";
-import { useState } from "react";
 
-export function ListElement({ product }: { product: Product }) {
-  // const [productList, setProductList] = useState<Product[]>([]);
-  // async function fetchProducts() {
-  //   const response = await fetch("api/products");
-  //   const body = await response.json();
-  //   setProductList(body);
-  // }
-
+export function ListElement({
+  product,
+  fetchProducts,
+}: {
+  product: Product;
+  fetchProducts: () => Promise<void>;
+}) {
   async function deleteTask(id: number) {
     const response = await fetch("api/product", {
       method: "DELETE",
@@ -16,6 +14,7 @@ export function ListElement({ product }: { product: Product }) {
         id: id,
       }),
     });
+    fetchProducts();
   }
 
   return (
