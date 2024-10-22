@@ -20,9 +20,15 @@ export function ListElement({
   return (
     <div className="listElement">
       <div>{product.name}</div>
-      <button onClick={() => deleteTask(product.id)} className="">
-        <i className="fa-solid fa-trash-can"></i>
-      </button>
+      <div className="buttons">
+        <button>
+          {" "}
+          <i className="fa-solid fa-pen-to-square icon-edit"></i>
+        </button>
+        <button onClick={() => deleteTask(product.id)} className="">
+          <i className="fa-solid fa-trash-can icon-delete"></i>
+        </button>
+      </div>
     </div>
   );
 }

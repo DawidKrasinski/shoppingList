@@ -162,3 +162,28 @@ input:not(:placeholder-shown) + label {
   );
   box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.3);
 }
+.buttons {
+  width: 54px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon-delete {
+  color: black;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.icon-delete:hover {
+  transform: scale(1.2);
+  color: #ec4622;
+}
+
+.icon-edit {
+  color: black;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.icon-edit:hover {
+  transform: scale(1.2);
+  color: orange;
+}
