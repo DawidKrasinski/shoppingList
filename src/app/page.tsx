@@ -16,14 +16,19 @@ export default function Home() {
 
   const [productList, setProductList] = useState<Product[]>([]);
   async function addTask() {
-    const response = await fetch("/api/product", {
-      method: "POST",
-      body: JSON.stringify({
-        name: inputValue,
-      }),
-    });
-    setInputValue("");
-    await fetchProducts();
+    if (inputValue !== "" && inputValue.length <= 20) {
+      const response = await fetch("/api/product", {
+        method: "POST",
+        body: JSON.stringify({
+          name: inputValue,
+        }),
+      });
+      setInputValue("");
+      await fetchProducts();
+    } else {
+      console.error("The product name is incorrect");
+      setInputValue("");
+    }
   }
 
   async function fetchProducts() {
