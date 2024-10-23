@@ -22,11 +22,10 @@ export function ListElement({
       <div>{product.name}</div>
       <div className="buttons">
         <button>
-          {" "}
-          <i className="fa-solid fa-pen-to-square icon-edit"></i>
+          <i className="fa-solid fa-pen-to-square icon"></i>
         </button>
         <button onClick={() => deleteTask(product.id)} className="">
-          <i className="fa-solid fa-trash-can icon-delete"></i>
+          <i className="fa-solid fa-trash-can icon"></i>
         </button>
       </div>
     </div>

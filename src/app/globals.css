@@ -168,22 +168,12 @@ input:not(:placeholder-shown) + label {
   justify-content: space-between;
 }
 
-.icon-delete {
+.icon{
   color: black;
-  transition: transform 0.2s, color 0.2s;
+  transition: transform 0.2s;
 }
 
-.icon-delete:hover {
+.icon:hover {
   transform: scale(1.2);
-  color: #ec4622;
 }
 
-.icon-edit {
-  color: black;
-  transition: transform 0.2s, color 0.2s;
-}
-
-.icon-edit:hover {
-  transform: scale(1.2);
-  color: orange;
-}

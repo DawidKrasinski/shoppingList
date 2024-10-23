@@ -84,3 +84,17 @@ export async function DELETE(req: NextRequest) {
     );
   }
 }
+
+//UPDATE method
+// export async function UPDATE(req: NextRequest) {
+//   const connection = getDB()
+//   if (!connection) {
+//     return NextResponse.json(
+//       { error: "cant connect with database" },
+//       { status: 500 })
+//   }
+//   try {
+//     const body = connection.
+//     const [results] = body.query('UPDATE products WHERE')
+//   }
+// }

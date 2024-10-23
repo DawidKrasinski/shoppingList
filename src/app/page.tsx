@@ -10,6 +10,10 @@ export default function Home() {
     setInputValue(e.target.value);
   }
 
+  function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") addTask();
+  }
+
   const [productList, setProductList] = useState<Product[]>([]);
   async function addTask() {
     const response = await fetch("/api/product", {
@@ -42,6 +46,7 @@ export default function Home() {
           className="addInput"
           placeholder=""
           onChange={inputChange}
+          onKeyDown={enterPressed}
         />
         <label htmlFor="addInput">Product</label>
         <button className="addButton" id="addButton" onClick={addTask}>
