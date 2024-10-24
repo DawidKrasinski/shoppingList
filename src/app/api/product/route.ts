@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 //Create the connection to database
 async function getDB() {
   try {
-    const connection = mysql.createConnection({
+    const connection = await mysql.createConnection({
       host: "localhost",
       user: "root",
       password: "dawid132009",
@@ -49,7 +49,8 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const [results] = await connection.query(
-      `INSERT INTO products (name) VALUES ("${body.name}");`
+      `INSERT INTO products (name) VALUES (?);`,
+      [body.name]
     );
     return NextResponse.json({}, { status: 201 });
   } catch (error) {
@@ -73,9 +74,10 @@ export async function DELETE(req: NextRequest) {
   try {
     const body = await req.json();
     const [results] = await connection.query(
-      `DELETE FROM products WHERE id = ${body.id};`
+      `DELETE FROM products WHERE id = ?;`,
+      [body.id]
     );
-    return NextResponse.json(results);
+    return NextResponse.json({}, { status: 200 });
   } catch (error) {
     console.log("cant use delete method", error);
     return NextResponse.json(
@@ -85,16 +87,24 @@ export async function DELETE(req: NextRequest) {
   }
 }
 
-//UPDATE method
-// export async function UPDATE(req: NextRequest) {
-//   const connection = getDB()
-//   if (!connection) {
-//     return NextResponse.json(
-//       { error: "cant connect with database" },
-//       { status: 500 })
-//   }
-//   try {
-//     const body = connection.
-//     const [results] = body.query('UPDATE products WHERE')
-//   }
-// }
+// PUT method
+export async function PUT(req: NextRequest) {
+  const connection = await getDB();
+  if (!connection) {
+    return NextResponse.json(
+      { error: "cant connect with database" },
+      { status: 500 }
+    );
+  }
+  try {
+    const body = await req.json();
+    const [results] = await connection.query(
+      `UPDATE products SET name = ? WHERE id = ?;`,
+      [body.name, body.id]
+    );
+    return NextResponse.json({}, { status: 200 });
+  } catch (error) {
+    console.log("cant use put method", error);
+    return NextResponse.json({ error: "cant use put method" }, { status: 500 });
+  }
+}

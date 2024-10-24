@@ -9,7 +9,7 @@ export function ListElement({
   fetchProducts: () => Promise<void>;
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(product.name);
 
   async function deleteTask(id: number) {
     const response = await fetch("api/product", {
@@ -23,6 +23,15 @@ export function ListElement({
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
+  }
+
+  async function confirm(id: number) {
+    const response = await fetch("/api/product", {
+      method: "PUT",
+      body: JSON.stringify({ id: id, name: inputValue }),
+    });
+    setIsEditing(false);
+    fetchProducts();
   }
 
   return !isEditing ? (
@@ -46,7 +55,7 @@ export function ListElement({
         className="bg-transparent outline-transparent h-fit w-fit"
       />
       <div className="buttons !justify-end">
-        <button>
+        <button onClick={() => confirm(product.id)}>
           <i className="fa-solid fa-square-check icon"></i>
         </button>
       </div>
