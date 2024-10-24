@@ -39,7 +39,12 @@ export function ListElement({
     </div>
   ) : (
     <div className="listElement">
-      <input value={product.name} onChange={inputChange} />
+      <input
+        placeholder={product.name}
+        value={inputValue}
+        onChange={inputChange}
+        className="bg-transparent outline-transparent h-fit w-fit"
+      />
       <div className="buttons !justify-end">
         <button>
           <i className="fa-solid fa-square-check icon"></i>
