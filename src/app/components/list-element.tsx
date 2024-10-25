@@ -34,6 +34,10 @@ export function ListElement({
     fetchProducts();
   }
 
+  function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") confirm(product.id);
+  }
+
   return !isEditing ? (
     <div className="listElement">
       <div>{product.name}</div>
@@ -52,6 +56,7 @@ export function ListElement({
         placeholder={product.name}
         value={inputValue}
         onChange={inputChange}
+        onKeyDown={enterPressed}
         className="bg-transparent outline-transparent h-fit w-fit"
       />
       <div className="buttons !justify-end">
