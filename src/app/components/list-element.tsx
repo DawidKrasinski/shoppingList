@@ -26,12 +26,17 @@ export function ListElement({
   }
 
   async function confirm(id: number) {
-    const response = await fetch("/api/product", {
-      method: "PUT",
-      body: JSON.stringify({ id: id, name: inputValue }),
-    });
-    setIsEditing(false);
-    fetchProducts();
+    if (inputValue !== "" && inputValue.length <= 20) {
+      const response = await fetch("/api/product", {
+        method: "PUT",
+        body: JSON.stringify({ id: id, name: inputValue }),
+      });
+      setIsEditing(false);
+      fetchProducts();
+    } else {
+      console.error("The product name is incorrect");
+      setInputValue(product.name);
+    }
   }
 
   function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
