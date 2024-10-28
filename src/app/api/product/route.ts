@@ -1,23 +1,5 @@
-import mysql from "mysql2/promise";
 import { NextRequest, NextResponse } from "next/server";
-
-//Create the connection to database
-async function getDB() {
-  try {
-    const connection = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "dawid132009",
-      database: "shoppinglistdb",
-      port: 3306,
-    });
-    console.log("Database connection created");
-    return connection;
-  } catch (error) {
-    console.log("Error connecting to database", error);
-    return null;
-  }
-}
+import { getDB } from "./db";
 
 // GET method
 export async function GET() {
