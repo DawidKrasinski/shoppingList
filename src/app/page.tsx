@@ -1,45 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ListElement } from "./components/list-element";
-import { Product } from "./product";
+import { useShopingList } from "./shopingListProvider";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { addProduct, productList } = useShopingList();
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
   }
 
   function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter") addTask();
+    if (event.key === "Enter") addProductClickHandler();
   }
 
-  const [productList, setProductList] = useState<Product[]>([]);
-  async function addTask() {
+  async function addProductClickHandler() {
     if (inputValue !== "" && inputValue.length <= 20) {
-      const response = await fetch("/api/product", {
-        method: "POST",
-        body: JSON.stringify({
-          name: inputValue,
-        }),
-      });
+      addProduct(inputValue);
       setInputValue("");
-      await fetchProducts();
     } else {
       console.error("The product name is incorrect");
-      setInputValue("");
+      setErrorMessage("Product name maxium length is 20 characters");
     }
   }
-
-  async function fetchProducts() {
-    const response = await fetch("/api/product");
-    const body = await response.json();
-    setProductList(body);
-  }
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   return (
     <div className="container">
@@ -47,25 +32,35 @@ export default function Home() {
         <input
           type="text"
           autoComplete="off"
+          id="addInput"
           value={inputValue}
           className="addInput"
           placeholder=""
           onChange={inputChange}
           onKeyDown={enterPressed}
         />
+        {errorMessage}
         <label htmlFor="addInput">Product</label>
-        <button className="addButton" id="addButton" onClick={addTask}>
+        <button
+          className="addButton"
+          id="addButton"
+          onClick={addProductClickHandler}
+        >
           Add
         </button>
       </div>
       <div className="spacer"></div>
       <div className="list">
         {productList.toReversed().map((product) => (
+<<<<<<< HEAD
+          <ListElement key={product.id} product={product} />
+=======
           <ListElement
             key={product.id}
             fetchProducts={fetchProducts}
             product={product}
           />
+>>>>>>> 4f2ec62580b927f7f1db9d91176051aa2e53ea81
         ))}
       </div>
     </div>

@@ -1,3 +1,7 @@
 node_modules
 .next
+<<<<<<< HEAD
 .env.local
+=======
+.env.local
+>>>>>>> 4f2ec62580b927f7f1db9d91176051aa2e53ea81

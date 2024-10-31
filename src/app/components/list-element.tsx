@@ -1,19 +1,14 @@
-import { Product } from "../product";
 import { useState } from "react";
+import { Product } from "../product";
+import { useShopingList } from "../shopingListProvider";
 
 export function ListElement({ product }: { product: Product }) {
+<<<<<<< HEAD
+=======
+  const { deleteProduct, editProduct } = useShopingList();
+>>>>>>> bae6b88bd0a72300038668276a144ef8549557c9
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(product.name);
-
-  async function deleteTask(id: number) {
-    const response = await fetch("api/product", {
-      method: "DELETE",
-      body: JSON.stringify({
-        id: id,
-      }),
-    });
-    fetchProducts();
-  }
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
@@ -21,12 +16,8 @@ export function ListElement({ product }: { product: Product }) {
 
   async function confirm(id: number) {
     if (inputValue !== "" && inputValue.length <= 20) {
-      const response = await fetch("/api/product", {
-        method: "PUT",
-        body: JSON.stringify({ id: id, name: inputValue }),
-      });
+      await editProduct(id, inputValue);
       setIsEditing(false);
-      fetchProducts();
     } else {
       console.error("The product name is incorrect");
       setInputValue(product.name);
@@ -44,7 +35,7 @@ export function ListElement({ product }: { product: Product }) {
         <button onClick={() => setIsEditing(true)}>
           <i className="fa-solid fa-pen-to-square icon"></i>
         </button>
-        <button onClick={() => deleteTask(product.id)} className="">
+        <button onClick={() => deleteProduct(product.id)} className="">
           <i className="fa-solid fa-trash-can icon"></i>
         </button>
       </div>
