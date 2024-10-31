@@ -1,13 +1,7 @@
 import { Product } from "../product";
 import { useState } from "react";
 
-export function ListElement({
-  product,
-  fetchProducts,
-}: {
-  product: Product;
-  fetchProducts: () => Promise<void>;
-}) {
+export function ListElement({ product }: { product: Product }) {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(product.name);
 
