@@ -3,11 +3,7 @@ import { getDB } from "../db";
 
 export async function DELETE(
   req: NextRequest,
-<<<<<<< HEAD
   { params }: { params: { id: number } }
-=======
-  { params }: { params: { id: string } }
->>>>>>> bae6b88bd0a72300038668276a144ef8549557c9
 ) {
   const connection = await getDB();
   if (!connection) {
@@ -17,10 +13,7 @@ export async function DELETE(
     );
   }
   try {
-<<<<<<< HEAD
     const body = await req.json();
-=======
->>>>>>> bae6b88bd0a72300038668276a144ef8549557c9
     const [results] = await connection.query(
       `DELETE FROM products WHERE id = ?;`,
       [params.id]
@@ -37,11 +30,7 @@ export async function DELETE(
 
 export async function PUT(
   req: NextRequest,
-<<<<<<< HEAD
   { params }: { params: { id: number } }
-=======
-  { params }: { params: { id: string } }
->>>>>>> bae6b88bd0a72300038668276a144ef8549557c9
 ) {
   const connection = await getDB();
   if (!connection) {
