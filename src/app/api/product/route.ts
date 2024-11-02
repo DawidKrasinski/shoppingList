@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDB } from "./db";
 
-<<<<<<< HEAD
-=======
 // GET method
->>>>>>> 4f2ec62580b927f7f1db9d91176051aa2e53ea81
 export async function GET() {
   const connection = await getDB();
   if (!connection) {
@@ -22,6 +19,7 @@ export async function GET() {
   }
 }
 
+// POST method
 export async function POST(req: NextRequest) {
   const connection = await getDB();
   if (!connection) {
