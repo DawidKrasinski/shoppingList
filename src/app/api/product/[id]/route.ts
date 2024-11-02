@@ -3,7 +3,7 @@ import { getDB } from "../db";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   const connection = await getDB();
   if (!connection) {
@@ -13,6 +13,7 @@ export async function DELETE(
     );
   }
   try {
+    const body = await req.json();
     const [results] = await connection.query(
       `DELETE FROM products WHERE id = ?;`,
       [params.id]
@@ -29,7 +30,7 @@ export async function DELETE(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   const connection = await getDB();
   if (!connection) {

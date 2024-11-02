@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDB } from "./db";
 
+<<<<<<< HEAD
 // GET method
+=======
+>>>>>>> 23c59acd73b5a3eb46d941afc808d978004193de
 export async function GET() {
   const connection = await getDB();
   if (!connection) {

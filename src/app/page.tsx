@@ -1,30 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ListElement } from "./components/list-element";
-import { useShopingList } from "./shopingListProvider";
+import { Product } from "./product";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const { addProduct, productList } = useShopingList();
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
   }
 
   function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter") addProductClickHandler();
+    if (event.key === "Enter") addTask();
   }
 
-  async function addProductClickHandler() {
-    if (inputValue !== "" && inputValue.length <= 20) {
-      addProduct(inputValue);
-      setInputValue("");
-    } else {
-      console.error("The product name is incorrect");
-      setErrorMessage("Product name maxium length is 20 characters");
-    }
-  }
+  const [productList, setProductList] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className="container">
@@ -32,20 +26,14 @@ export default function Home() {
         <input
           type="text"
           autoComplete="off"
-          id="addInput"
           value={inputValue}
           className="addInput"
           placeholder=""
           onChange={inputChange}
           onKeyDown={enterPressed}
         />
-        {errorMessage}
         <label htmlFor="addInput">Product</label>
-        <button
-          className="addButton"
-          id="addButton"
-          onClick={addProductClickHandler}
-        >
+        <button className="addButton" id="addButton" onClick={addTask}>
           Add
         </button>
       </div>
