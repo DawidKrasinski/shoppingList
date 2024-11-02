@@ -168,7 +168,7 @@ input:not(:placeholder-shown) + label {
   justify-content: space-between;
 }
 
-.icon{
+.icon {
   color: black;
   transition: transform 0.2s;
 }
@@ -176,4 +176,3 @@ input:not(:placeholder-shown) + label {
 .icon:hover {
   transform: scale(1.2);
 }
-

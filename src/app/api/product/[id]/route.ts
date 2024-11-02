@@ -13,7 +13,6 @@ export async function DELETE(
     );
   }
   try {
-    const body = await req.json();
     const [results] = await connection.query(
       `DELETE FROM products WHERE id = ?;`,
       [params.id]

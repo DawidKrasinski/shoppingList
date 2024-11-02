@@ -1,3 +1,4 @@
+"use client";
 import { useContext, createContext, useState, useEffect } from "react";
 import { Product } from "./product";
 
@@ -10,9 +11,11 @@ export type ShoppingListContext = {
 
 const ShoppingListContext = createContext<null | ShoppingListContext>(null);
 
-export function ShoppingListProvider(props: { children: React.ReactNode }) {
+export default function ShoppingListProvider(props: {
+  children: React.ReactNode;
+}) {
+  const [productList, setProductList] = useState<Product[]>([]);
   async function fetchProducts() {
-    const [productList, setProductList] = useState<Product[]>([]);
     const response = await fetch("/api/product");
     const body = await response.json();
     setProductList(body);
@@ -29,19 +32,16 @@ export function ShoppingListProvider(props: { children: React.ReactNode }) {
   }
 
   async function deleteProduct(id: number) {
-    const response = await fetch("api/product", {
+    const response = await fetch(`api/product/${id}`, {
       method: "DELETE",
-      body: JSON.stringify({
-        id: id,
-      }),
     });
     fetchProducts();
   }
 
   async function editProduct(id: number, name: string) {
-    const response = await fetch("/api/product", {
+    const response = await fetch(`/api/product/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ id: id, name: name }),
+      body: JSON.stringify({ name }),
     });
     fetchProducts();
   }
@@ -52,13 +52,16 @@ export function ShoppingListProvider(props: { children: React.ReactNode }) {
 
   return (
     <ShoppingListContext.Provider
-      value={(addProduct, editProduct, deleteProduct, ProductList)}
+      value={{ addProduct, editProduct, deleteProduct, productList }}
     >
       {props.children}
     </ShoppingListContext.Provider>
   );
 }
 
-// export useShoppingList() {
-//     return
-// }
+export function useShoppingList() {
+  const context = useContext(ShoppingListContext);
+  if (!context)
+    throw new Error("useShopingList must be used within a ShopingListProvider");
+  return context;
+}

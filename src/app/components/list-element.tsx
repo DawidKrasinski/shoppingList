@@ -1,12 +1,24 @@
 import { Product } from "../product";
 import { useState } from "react";
+import { useShoppingList } from "../shoppingListProvider";
 
 export function ListElement({ product }: { product: Product }) {
+  const { editProduct, deleteProduct } = useShoppingList();
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(product.name);
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
+  }
+
+  async function confirm(id: number) {
+    if (inputValue !== "" && inputValue.length <= 20) {
+      await editProduct(id, inputValue);
+      setIsEditing(false);
+    } else {
+      console.error("The product name is incorrect");
+      setInputValue(product.name);
+    }
   }
 
   function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -20,7 +32,7 @@ export function ListElement({ product }: { product: Product }) {
         <button onClick={() => setIsEditing(true)}>
           <i className="fa-solid fa-pen-to-square icon"></i>
         </button>
-        <button onClick={() => deleteTask(product.id)} className="">
+        <button onClick={() => deleteProduct(product.id)} className="">
           <i className="fa-solid fa-trash-can icon"></i>
         </button>
       </div>
