@@ -3,13 +3,18 @@
 import { useShoppingList } from "./shoppingListProvider";
 import { useState } from "react";
 import { ListElement } from "./components/list-element";
-import { Product } from "./product";
+import { twMerge } from "tailwind-merge";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const { productList, addProduct } = useShoppingList();
+  // const [errorMessage, setErrorMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
+    const value = e.target.value;
+    setIsError(value.length > 20);
   }
 
   function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -17,7 +22,7 @@ export default function Home() {
   }
 
   async function addProductClickHandler() {
-    if (inputValue !== "" && inputValue.length <= 20) {
+    if (!isError) {
       addProduct(inputValue);
       setInputValue("");
     } else {
@@ -33,16 +38,18 @@ export default function Home() {
           type="text"
           autoComplete="off"
           value={inputValue}
-          className="addInput"
+          id="addInput"
+          className={twMerge("addInput", isError && "focus:outline-red-500")}
           placeholder=""
           onChange={inputChange}
           onKeyDown={enterPressed}
         />
         <label htmlFor="addInput">Product</label>
-        <button className="addButton" id="addButton" onClick={addProductClickHandler}>
+        <button className="addButton" onClick={addProductClickHandler}>
           Add
         </button>
       </div>
+
       <div className="spacer"></div>
       <div className="list">
         {productList.toReversed().map((product) => (
