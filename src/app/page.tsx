@@ -12,8 +12,8 @@ export default function Home() {
   const [isError, setIsError] = useState(false);
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInputValue(e.target.value);
     const value = e.target.value;
+    setInputValue(value);
     setIsError(value.length > 20);
   }
 
