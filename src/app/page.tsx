@@ -15,6 +15,7 @@ export default function Home() {
     const value = e.target.value;
     setInputValue(value);
     setIsError(value.length > 20);
+    return value;
   }
 
   function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -22,6 +23,12 @@ export default function Home() {
   }
 
   async function addProductClickHandler() {
+    console.log(`${inputValue}.`, inputValue.trim().length, isError);
+    if (inputValue.trim().length == 0) {
+      setIsError(true);
+    }
+    console.log(isError);
+
     if (!isError) {
       addProduct(inputValue);
       setInputValue("");
@@ -59,5 +66,3 @@ export default function Home() {
     </div>
   );
 }
-
-// test

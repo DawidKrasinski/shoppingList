@@ -52,7 +52,12 @@ export default function ShoppingListProvider(props: {
 
   return (
     <ShoppingListContext.Provider
-      value={{ addProduct, editProduct, deleteProduct, productList }}
+      value={{
+        addProduct,
+        editProduct,
+        deleteProduct,
+        productList,
+      }}
     >
       {props.children}
     </ShoppingListContext.Provider>
