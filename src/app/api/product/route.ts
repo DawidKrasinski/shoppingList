@@ -28,6 +28,9 @@ export async function POST(req: NextRequest) {
   }
   try {
     const body = await req.json();
+    if (body.name.length > 20 || body.name === "") {
+      return NextResponse.json({ error: "Bad request" }, { status: 400 });
+    }
     const [results] = await connection.query(
       `INSERT INTO products (name) VALUES (?);`,
       [body.name]

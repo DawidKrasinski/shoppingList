@@ -2,20 +2,23 @@
 
 import { useShoppingList } from "./shoppingListProvider";
 import { useState } from "react";
+import { flushSync } from "react-dom";
 import { ListElement } from "./components/list-element";
 import { twMerge } from "tailwind-merge";
+import { isError } from "util";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
-  const { productList, addProduct } = useShoppingList();
+  const { productList, errorMessage, addProduct } = useShoppingList();
   // const [errorMessage, setErrorMessage] = useState("");
   const [isError, setIsError] = useState(false);
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
-    setInputValue(value);
-    setIsError(value.length > 20);
-    return value;
+    flushSync(() => {
+      setIsError(value.length > 20);
+      setInputValue(value);
+    });
   }
 
   function enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -23,15 +26,13 @@ export default function Home() {
   }
 
   async function addProductClickHandler() {
-    console.log(`${inputValue}.`, inputValue.trim().length, isError);
-    if (inputValue.trim().length == 0) {
-      setIsError(true);
-    }
-    console.log(isError);
-
     if (!isError) {
       addProduct(inputValue);
-      setInputValue("");
+      if (errorMessage) {
+        setIsError(true);
+      } else {
+        setInputValue("");
+      }
     } else {
       console.error("The product name is incorrect");
       // setErrorMessage("Product name maxium length is 20 characters");

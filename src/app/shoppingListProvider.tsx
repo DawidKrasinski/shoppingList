@@ -4,6 +4,7 @@ import { Product } from "./product";
 
 export type ShoppingListContext = {
   productList: Product[];
+  errorMessage: string | null;
   addProduct: (name: string) => Promise<void>;
   deleteProduct: (id: number) => Promise<void>;
   editProduct: (id: number, name: string) => Promise<void>;
@@ -15,6 +16,7 @@ export default function ShoppingListProvider(props: {
   children: React.ReactNode;
 }) {
   const [productList, setProductList] = useState<Product[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   async function fetchProducts() {
     const response = await fetch("/api/product");
     const body = await response.json();
@@ -28,6 +30,9 @@ export default function ShoppingListProvider(props: {
         name: name,
       }),
     });
+    if (!response.ok) {
+      setErrorMessage(response.statusText);
+    }
     fetchProducts();
   }
 
@@ -57,6 +62,7 @@ export default function ShoppingListProvider(props: {
         editProduct,
         deleteProduct,
         productList,
+        errorMessage,
       }}
     >
       {props.children}
