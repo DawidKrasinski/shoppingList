@@ -1,5 +1,6 @@
 import { Product } from "../product";
 import { useState, useRef } from "react";
+import { flushSync } from "react-dom";
 import { useShoppingList } from "../shoppingListProvider";
 
 export function ListElement({ product }: { product: Product }) {
@@ -26,9 +27,10 @@ export function ListElement({ product }: { product: Product }) {
     if (event.key === "Enter") confirm(product.id);
   }
 
-  async function handleEditButtonClick() {
-    console.log(inputRef);
-    setIsEditing(true);
+  function editMode() {
+    flushSync(() => {
+      setIsEditing(true);
+    });
     inputRef.current?.focus();
   }
 
@@ -36,7 +38,7 @@ export function ListElement({ product }: { product: Product }) {
     <div className="listElement">
       <div>{product.name}</div>
       <div className="buttons">
-        <button onClick={handleEditButtonClick}>
+        <button onClick={editMode}>
           <i className="fa-solid fa-pen-to-square icon"></i>
         </button>
         <button onClick={() => deleteProduct(product.id)} className="">
