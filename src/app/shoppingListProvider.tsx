@@ -74,3 +74,4 @@ export function useShoppingList() {
     throw new Error("useShopingList must be used within a ShopingListProvider");
   return context;
 }
+//.
