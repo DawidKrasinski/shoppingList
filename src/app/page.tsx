@@ -5,12 +5,10 @@ import { useState } from "react";
 import { flushSync } from "react-dom";
 import { ListElement } from "./components/list-element";
 import { twMerge } from "tailwind-merge";
-import { isError } from "util";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
-  const { productList, errorMessage, addProduct } = useShoppingList();
-  // const [errorMessage, setErrorMessage] = useState("");
+  const { productList, addProduct } = useShoppingList();
   const [isError, setIsError] = useState(false);
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -27,15 +25,15 @@ export default function Home() {
 
   async function addProductClickHandler() {
     if (!isError) {
-      addProduct(inputValue);
-      if (errorMessage) {
+      const error = await addProduct(inputValue);
+      if (error) {
         setIsError(true);
+        console.log(error);
       } else {
         setInputValue("");
       }
     } else {
       console.error("The product name is incorrect");
-      // setErrorMessage("Product name maxium length is 20 characters");
     }
   }
 

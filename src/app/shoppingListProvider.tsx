@@ -4,8 +4,7 @@ import { Product } from "./product";
 
 export type ShoppingListContext = {
   productList: Product[];
-  errorMessage: string | null;
-  addProduct: (name: string) => Promise<void>;
+  addProduct: (name: string) => Promise<string | undefined>;
   deleteProduct: (id: number) => Promise<void>;
   editProduct: (id: number, name: string) => Promise<void>;
 };
@@ -31,7 +30,7 @@ export default function ShoppingListProvider(props: {
       }),
     });
     if (!response.ok) {
-      setErrorMessage(response.statusText);
+      return response.statusText;
     }
     fetchProducts();
   }
@@ -62,7 +61,6 @@ export default function ShoppingListProvider(props: {
         editProduct,
         deleteProduct,
         productList,
-        errorMessage,
       }}
     >
       {props.children}
